@@ -1,0 +1,28 @@
+posts: list[dict] = [
+    {
+
+        "id": 1,
+    "author": "Muhammad Raihan Molla",
+    "title": "FastAPI is Awesome",
+    "content": "This Framework is really easy to use and super fast.",
+    "date_posted": "September 4, 2026",
+    },
+    {
+        "id": 1,
+    "author": "Muhammad Raihan Molla",
+    "title": "FastAPI is Awesome",
+    "content": "This Framework is really easy to use and super fast.",
+    "date_posted": "September 4, 2026",
+    },
+      
+
+]
+
+@app.get("/")
+def home():
+    return {"message": "Hello world!"}
+
+
+@app.get("/api/posts")
+def get_posts():
+    return posts
