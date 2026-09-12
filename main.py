@@ -6,6 +6,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from schemas import PostCreate, PostResponse
+
 
 app = FastAPI()
 
@@ -57,13 +59,34 @@ def post_page(request: Request, post_id: int):
 
 
 
-@app.get("/api/posts")
+@app.get("/api/posts", response_model=list[PostResponse])
 def get_posts():
     return posts 
 
 
+@app.post(
+    "/api/posts",
+    response_model=PostResponse,
+    status_code=status.HTTP_201_CREATED,
 
-@app.get("/api/posts/{post_id}")
+)
+
+def create_post(post: PostCreate):
+    new_id = max(p["id"] for p in posts) + 1 if posts else 1
+    new_post = {
+        "id": new_id,
+        "author": post.author,
+        "title": post.title,
+        "content": post.content,
+        "date_posted": "April 23,2025",
+
+    }
+    posts.append(new_post)
+    return new_post
+
+
+
+@app.get("/api/posts/{post_id}", response_model=PostResponse)
 def get_post(post_id: int):
     for post in posts:
         if post.get("id") == post_id:
@@ -100,7 +123,7 @@ def validation_exception_handler(request: Request, exception: RequestValidationE
     if request.url.path.startswith("/api"):
         return JSONResponse(
             status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
-            content={"detiald": exception.errors()},
+            content={"detail": exception.errors()},
         )
     return templates.TemplateResponse(
         request,
@@ -108,7 +131,7 @@ def validation_exception_handler(request: Request, exception: RequestValidationE
         {
             "status_code": status.HTTP_422_UNPROCESSABLE_CONTENT,
             "title": status.HTTP_422_UNPROCESSABLE_CONTENT,
-            "message": "Invalide request. PLease check your input and try again."
+            "message": "Invalid request. Please check your input and try again.",
 
         },
         status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
