@@ -21,3 +21,41 @@ class User(Base):
     )
 
     posts: Mapped[list[Post]] = relationship(back_populates="author")
+
+    @property
+    def image_path(self) -> str:
+        if self.image_file:
+            return f"/media/{self.image_file}"
+        return "/static/profile_pics/default.jpg"
+
+    def __repr__(self) -> str:
+        return f"User('{self.username}', '{self.email}')"
+
+    def __str__(self) -> str:
+        return self.username
+
+
+class Post(Base):
+    __tablename__ = "posts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    title: Mapped[str] = mapped_column(String(100), nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    date_posted: Mapped[datetime] = mapped_column(
+        DateTime,
+        nullable=False,
+        default=lambda: datetime.now(UTC),
+    )
+    user_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False,
+    )
+
+    author: Mapped[User] = relationship(back_populates="posts")
+
+    def __repr__(self) -> str:
+        return f"Post('{self.title}', '{self.date_posted}')"
+
+    def __str__(self) -> str:
+        return self.title
