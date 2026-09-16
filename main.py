@@ -383,6 +383,10 @@ async def general_http_exception_handler(request: Request, exception: StarletteH
         status_code=exception.status_code,
     )
 
+
+#Validation_Error
+
+
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(
     request: Request, exception: RequestValidationError):
