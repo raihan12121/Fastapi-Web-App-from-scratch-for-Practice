@@ -26,14 +26,17 @@ export function hideModal(modalId) {
 
 // XSS prevention for dynamic content insertion
 export function escapeHtml(text) {
+    if (text === null || text === undefined) return "";
     const div = document.createElement("div");
-    div.textContent = text;
+    div.textContent = String(text);
     return div.innerHTML;
 }
 
 // Date formatting to match server's strftime("%B %d, %Y")
 export function formatDate(dateString) {
+    if (!dateString) return "";
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) return String(dateString);
     return date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
