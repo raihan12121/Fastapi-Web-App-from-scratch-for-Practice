@@ -142,7 +142,13 @@ async def register_page(request: Request):
         {"title": "Register"},
     )
 
-
+@app.get("/account", include_in_schema=False, name="register_page")
+async def account_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "account.html",
+        {"title": "Account"},
+    )
 
     
 
