@@ -46,7 +46,7 @@ class PostBase(BaseModel):
 
 
 class PostCreate(PostBase):
-    user_id: int
+    user_id: int | None = None
 
 
 class PostUpdate(BaseModel):
@@ -62,3 +62,11 @@ class PostResponse(PostBase):
     user_id: int
     date_posted: datetime
     author: UserPublic | None = None
+
+
+class PaginatedPostsResponse(BaseModel):
+    posts: list[PostResponse]
+    total: int
+    skip: int
+    limit: int
+    has_more: bool
