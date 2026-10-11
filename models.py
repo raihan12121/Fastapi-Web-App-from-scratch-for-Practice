@@ -56,15 +56,19 @@ class Post(Base):
     title: Mapped[str] = mapped_column(String(100), nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
     date_posted: Mapped[datetime] = mapped_column(
-        DateTime,
+        DateTime(timezone=True),
         nullable=False,
         default=lambda: datetime.now(UTC),
     )
+
     user_id: Mapped[int] = mapped_column(
         Integer,
         ForeignKey("users.id"),
         nullable=False,
     )
+
+    likes: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
+
 
     author: Mapped[User] = relationship(back_populates="posts")
 
