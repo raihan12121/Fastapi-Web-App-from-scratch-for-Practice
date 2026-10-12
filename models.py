@@ -7,6 +7,9 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import Base
 
+from config import settings
+
+
 
 class User(Base):
     __tablename__ = "users"
@@ -37,9 +40,10 @@ class User(Base):
     @property
     def image_path(self) -> str:
         if self.image_file:
-            if self.image_file.startswith("profile_pics/"):
-                return f"/media/{self.image_file}"
-            return f"/media/profile_pics/{self.image_file}"
+            if self.image_file.startswith("http://") or self.image_file.startswith("https://"):
+                return self.image_file
+            filename = self.image_file.removeprefix("profile_pics/")
+            return f"https://{settings.s3_bucket_name}.s3.{settings.s3_region}.amazonaws.com/profile_pics/{filename}"
         return "/static/profile_pics/default.jpg"
 
     def __repr__(self) -> str:
