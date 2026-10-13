@@ -1,1 +1,1 @@
-This project is for learning . I'm learning FastAPI from Corey Schafer and the whole project is based on his tutorial.
+The Whole project build from scratch while learning FASTAPI . There is no contribution in frontend . To learn and build this project i watched and follows Corey Schafer"s FastAPI course from youtube. I will provide a proper description on what i have learned and how i learned .
