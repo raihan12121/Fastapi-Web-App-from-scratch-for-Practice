@@ -1,10 +1,13 @@
-/git
-
+.git
+.github
 tests/
+populate_images/
+*.md
 
 # Python-generated files
 __pycache__/
-*.py[oc]
+*.py[cod]
+*$py.class
 build/
 dist/
 wheels/
@@ -13,5 +16,10 @@ wheels/
 # Virtual environments
 .venv
 .env
-
 .python-version
+
+# Testing & caches
+.pytest_cache/
+.coverage
+htmlcov/
+

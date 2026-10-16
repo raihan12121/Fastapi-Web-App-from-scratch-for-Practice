@@ -1,11 +1,59 @@
-# Python-generated files
+# Byte-compiled / optimized / C-extension files
 __pycache__/
-*.py[oc]
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
 build/
 dist/
 wheels/
-*.egg-info
+*.egg-info/
+*.egg
 
 # Virtual environments
-.venv
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables & secrets
 .env
+.env.*
+!.env.example
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+.hypothesis/
+.tox/
+
+# Type checking & Linting caches
+.mypy_cache/
+.ruff_cache/
+
+# Local media & uploaded files (keep placeholder directory)
+media/profile_pics/*
+!media/profile_pics/.gitkeep
+
+# IDEs & code editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Logs
+*.log
